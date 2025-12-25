@@ -1,14 +1,20 @@
 import os
-from supabase import create_client, Client
+from supabase import create_client
 from openai import OpenAI
-from typing import Optional
 
-OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
-SUPABASE_URL = os.getenv("SUPABASE_URL")
-SUPABASE_KEY = os.getenv("SUPABASE_KEY")
-SERVICE_API_KEY = os.getenv("SERVICE_API_KEY")
-TELEGRAM_BOT_TOKEN = os.getenv("TELEGRAM_BOT_TOKEN")
-BACKEND_URL = os.getenv("BACKEND_URL")
+supabase = None
+openai_client = None
 
-client: Optional[OpenAI] = OpenAI(api_key=OPENAI_API_KEY) if OPENAI_API_KEY else None
-supabase: Optional[Client] = create_client(SUPABASE_URL, SUPABASE_KEY) if SUPABASE_URL else None
+def init_clients():
+    global supabase, openai_client
+
+    supabase_url = os.getenv("SUPABASE_URL")
+    supabase_key = os.getenv("SUPABASE_KEY")
+    openai_key = os.getenv("OPENAI_API_KEY")
+
+    if supabase_url and supabase_key:
+        supabase = create_client(supabase_url, supabase_key)
+
+    if openai_key:
+        openai_client = OpenAI(api_key=openai_key)
+
