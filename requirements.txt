@@ -1,0 +1,9 @@
+fastapi
+uvicorn[standard]
+pydantic
+python-multipart
+supabase
+openai
+PyPDF2
+python-docx
+requests
