@@ -1,10 +1,13 @@
 from fastapi import FastAPI
-from lessons.routes import router as lesson_router
+from core.config import init_clients
 
-app = FastAPI(title="Job Funnel Agent")
+app = FastAPI()
 
-app.include_router(lesson_router)
+@app.on_event("startup")
+def startup():
+    init_clients()
 
 @app.get("/")
 def health():
     return {"status": "ok"}
+
